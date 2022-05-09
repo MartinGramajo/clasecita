@@ -9,7 +9,7 @@ export default function Home() {
     const form = event.currentTarget;
     event.preventDefault();
     event.stopPropagation();
-    const nuevoArray = [...tareas, input];
+    const nuevoArray = [...tareas, { ...input }];
     setTareas(nuevoArray);
     form.reset();
   };
