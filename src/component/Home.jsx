@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 
 export default function Home() {
+  // state donde guardamos el texto ingresado al input por el usuario.
   const [input, setInput] = useState({ titulo: "", estado: "" });
-  const [tareas, setTareas] = useState([]);
-  console.log("~ tareas", tareas);
 
+  // state donde guardamos y listamos cada una de las tareas ingresada.
+  const [tareas, setTareas] = useState([]);
+
+  // funcion para cargar al listado de tarea, nuevas tareas
   const handleSubmit = (event) => {
     const form = event.currentTarget;
     event.preventDefault();
@@ -14,6 +17,7 @@ export default function Home() {
     form.reset();
   };
 
+  // funcion para capturar lo ingresado por el usuario en el input
   const handleChange = (e) => {
     e.preventDefault();
     const { value, name } = e.target;
@@ -21,11 +25,13 @@ export default function Home() {
     setInput(newInput);
   };
 
+  // filter aplicado para borrar un elemento del listado tarea.
   const borrarElemento = (i) => {
-    const tareaFiltrada = tareas.filter((_, index) => index !== i);
+    const tareaFiltrada = tareas.filter((tarea, index) => index !== i);
     setTareas(tareaFiltrada);
   };
 
+  // funcion para tachar una tarea completada.
   const tachar = (i) => {
     const tareaModificada = tareas.map((tarea, index) => {
       if (index === i) {
