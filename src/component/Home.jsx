@@ -1,13 +1,18 @@
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import {
+  guardarEnLocalStorage,
+  leerDeLocalStorage,
+} from "../utils/localStorage";
+
+const tareasLocal = leerDeLocalStorage("tareas") || [];
 
 export default function Home() {
   // state donde guardamos el texto ingresado al input por el usuario.
   const [input, setInput] = useState({ titulo: "", estado: "" });
 
   // state donde guardamos y listamos cada una de las tareas ingresada.
-  const [tareas, setTareas] = useState([]);
-  console.log("~ tareas", tareas);
+  const [tareas, setTareas] = useState(tareasLocal);
 
   // funcion para cargar al listado de tarea, nuevas tareas
   const handleSubmit = (event) => {
@@ -17,6 +22,7 @@ export default function Home() {
     input.id = uuidv4();
     const nuevoArray = [...tareas, { ...input }];
     setTareas(nuevoArray);
+    guardarEnLocalStorage({ key: "tareas", value: nuevoArray }); // traigo la funcion para guardar en el ls
     form.reset();
   };
 
@@ -31,6 +37,8 @@ export default function Home() {
   // filter aplicado para borrar un elemento del listado tarea.
   const borrarElemento = (i) => {
     const tareaFiltrada = tareas.filter((tarea) => tarea.id !== i);
+    guardarEnLocalStorage({ key: "tareas", value: tareaFiltrada }); // traigo la funcion para guardar en el ls
+
     setTareas(tareaFiltrada);
   };
 
